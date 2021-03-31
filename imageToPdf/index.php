@@ -81,7 +81,7 @@ if(isset($_POST['submit']))
       unlink($image);
     }
     if($i == $total){
-      $pdf->Output('I','file.pdf');
+      $pdf->Output('D','file.pdf');
     }
 
     // ob_end_flush();
@@ -224,6 +224,7 @@ body {
 
 </style>
 
+<h1> JPG/PNG to PDF Converter </h1>
 
  <div>
     <form method="post" enctype="multipart/form-data">
@@ -279,3 +280,13 @@ $("#remove").click(function(){
 })
 
 </script>
+<style type="text/css">
+  h1{
+        text-align: center;
+    color: #5ba50a;
+    margin: 20px auto;
+  }
+  .zone{
+      background: radial-gradient(ellipse at center,#eccc23 0,#ffcb56 100%);
+  }
+</style>

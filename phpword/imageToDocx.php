@@ -65,17 +65,37 @@ if(isset($_POST['submit']))
     if($i == $total){
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
         $objWriter->save('file.docx');
+        
 
         // $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'HTML');
         // $objWriter->save('file.html');
-        $url = "./file.docx";
-        header('Content-Description: File Transfer');
-        header('Content-Type: application/docx');
-        header('Content-Disposition: attachment; filename="'.basename($url).'"');
-        header('Content-Transfer-Encoding: binary');
-        header('Expires: 0');
-        header('Content-Length: ' . filesize($url));
-        header('Pragma: no-cache');
+        $url = "file.docx";
+        // header('Content-Description: File Transfer');
+        // header('Content-Type: application/vnd.ms-word');
+        // header('Content-Disposition: attachment; filename="'.basename($url).'"');
+        // header('Content-Transfer-Encoding: binary');
+        // header('Expires: 0');
+        // header('Content-Length: ' . filesize($url));
+        // header('Pragma: no-cache');
+
+        //Clear system output buffer
+        // flush();
+
+        // //Read the size of the file
+        // readfile($url);
+
+        //Terminate from the script
+        // die();
+
+        //Define header information
+        header("Pragma: public");
+        header("Expires: 0");
+        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+        header("Content-Type: application/force-download");
+        header("Content-Type: application/octet-stream");
+        header("Content-Type: application/download");;
+        header("Content-Disposition: attachment;filename=$url");
+        header("Content-Transfer-Encoding: binary ");
 
         //Clear system output buffer
         flush();
@@ -83,10 +103,7 @@ if(isset($_POST['submit']))
         //Read the size of the file
         readfile($url);
 
-        //Terminate from the script
-        // die();
 
-                
 
         unlink($url);
         // unlink('file.html');
@@ -106,132 +123,7 @@ if(isset($_POST['submit']))
 ?>
 <?php include '../header.php' ?>
 
-<style type="text/css">
-        @import url(https://fonts.googleapis.com/css?family=Exo+2:400,700,500,300);
-
-body {
-  background:white;
-  font-family: "Exo 2";
-}
-
-.zone {      
-  margin: 30px auto;
-  position: relative;
-  top: 0; left: 0; bottom: 0; right: 0;
-  background: radial-gradient(ellipse at center,#EB6A5A 0,#c9402f 100%);
-  width:60%;
-  height:35%;  
-  border:5px dashed white;
-  text-align:center;
-  color: white;
-  z-index: 20;
-  transition: all 0.3s ease-out;
-  display: flex;
-    flex-direction: column;
-    padding: 30px 40px;
-    /*background: rgb(255 159 25);*/
-    flex-direction: column;
-    justify-content: center;
-
-}
-  box-shadow: 0 0 0 1px rgba(255,255,255,.05),inset 0 0 .25em 0 rgba(0,0,0,.25);
-  .btnCompression {
-    .btn {
-
-    } 
-    .active {
-      background: #EB6A5A;
-      color:white;
-    }
-  }
-  i {
-    text-align: center;
-    font-size: 10rem;  
-    color:#fff;
-    /margin-top: 50px;/
-  }
-  .selectFile {
-    height: 50px;
-    margin: 20px auto;
-    position: relative;
-    width: 200px;          
-  }
-
-  label, input {
-    cursor: pointer;
-    display: block;
-    height: 50px;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
-    border-radius: 5px;          
-  }
-
-  label {
-    background: #fff;
-    color:#EB6A5A;
-    display: inline-block;
-    font-size: 1.2em;
-    line-height: 50px;
-    padding: 0;
-    text-align: center;
-    white-space: nowrap;
-    text-transform: uppercase;
-    font-weight: 400;   
-    box-shadow: 0 1px 1px gray;
-  }
-
-  input[type=file] {
-    opacity: 0;
-  }
-  input[type=submit] {
-    opacity: 0;
-  }
-
-}
-.zone.in {
-  color:white;
-  border-color:white;
-  background: radial-gradient(ellipse at center,#EB6A5A 0,#c9402f 100%);
-  i {          
-    color:#fff;
-  }
-  label {
-    background: #fff;
-    color:#EB6A5A;
-  }
-}
-.zone.hover {
-  color:gray;
-  border-color:white;
-  background:#fff;
-  border:5px dashed gray;
-  i {          
-    color:#EB6A5A;
-  }
-  label {
-    background: #fff;
-    color:#EB6A5A;
-  }
-}
-.zone.fade {
-  transition: all 0.3s ease-out;
-  opacity: 1;
-}
-
-#remove:hover{
-    color:black;
-    font-size: xx-large;
-    cursor: pointer;
-}
-.fa-trash:before {
-    content: "\f1f8";
-    font-size: xx-large;
-}
-
-</style>
-
+<h1> JPG/PNG to DOCX Converter </h1>
   
  <div>
     <form method="post" enctype="multipart/form-data">
@@ -262,30 +154,16 @@ body {
     </form> 
  </div>
 
-  
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-<script type="text/javascript">
-    
-$(document).ready(function(){    
 
-$('.selectBlock').show();
-$('.submitBlock').hide();
-$("#fileInput").change(function() {
-    $('.selectBlock').hide();
-    $('.submitBlock').show();
-    var inp = document.getElementById('fileInput');
-    var str=[];
-    for (var i=0;i<inp.files.length;i++)
-    {
-        str[i]=inp.files.item(i).name;
-        str[i]+="  "
-    }
-    document.getElementById("finfo").innerHTML=str;
-});
-});
-$("#remove").click(function(){
-    location.reload();
-})
+<style type="text/css">
+  h1{
+    text-align: center;
+    color: #3592e2;
+    margin: 20px auto;
+  }
 
-
-</script>
+  .zone{
+    background: radial-gradient(ellipse at center,#41e42f 0,#66d24b 100%);
+  }
+</style>
