@@ -17,6 +17,6 @@
 
 	 ?>
 
-	 <?php include '../header.php' ?>
+	 
 
 	 

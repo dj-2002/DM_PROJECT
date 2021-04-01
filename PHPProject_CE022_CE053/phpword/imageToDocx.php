@@ -53,10 +53,10 @@ if(isset($_POST['submit']))
           $image,
           array(
               'width'         => $width,
-              'marginTop'     => 20,
-              'marginLeft'    => 20, 
-              'alignment'     => \PhpOffice\PhpWord\SimpleType\Jc::CENTER,
-              'wrappingStyle' => 'behind'
+              // 'marginTop'     => 20,
+              // 'marginLeft'    => 20, 
+              // 'alignment'     => \PhpOffice\PhpWord\SimpleType\Jc::CENTER,
+              // 'wrappingStyle' => 'behind'
           )
       );
 
@@ -64,48 +64,16 @@ if(isset($_POST['submit']))
     }
     if($i == $total){
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
-        $objWriter->save('file.docx');
         
 
-        // $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'HTML');
-        // $objWriter->save('file.html');
-        $url = "file.docx";
-        // header('Content-Description: File Transfer');
-        // header('Content-Type: application/vnd.ms-word');
-        // header('Content-Disposition: attachment; filename="'.basename($url).'"');
-        // header('Content-Transfer-Encoding: binary');
-        // header('Expires: 0');
-        // header('Content-Length: ' . filesize($url));
-        // header('Pragma: no-cache');
+        header('Content-Type: application/octet-stream');
+        header('Content-Disposition: attachment;filename="test.docx"');
 
-        //Clear system output buffer
-        // flush();
+        
+        $objWriter->save('file.docx');
+        $objWriter->save('php://output');
 
-        // //Read the size of the file
-        // readfile($url);
-
-        //Terminate from the script
-        // die();
-
-        //Define header information
-        header("Pragma: public");
-        header("Expires: 0");
-        header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-        header("Content-Type: application/force-download");
-        header("Content-Type: application/octet-stream");
-        header("Content-Type: application/download");;
-        header("Content-Disposition: attachment;filename=$url");
-        header("Content-Transfer-Encoding: binary ");
-
-        //Clear system output buffer
-        flush();
-
-        //Read the size of the file
-        readfile($url);
-
-
-
-        unlink($url);
+        // unlink($url);
         // unlink('file.html');
 
 
